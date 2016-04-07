@@ -71,6 +71,10 @@ inductive vect (A : Type) : nat -> Type :=
 | nil {} : vect A nat.zero
 | cons : Π {n}, A -> vect A n -> vect A (nat.succ n)
 
+ definition vect.append {T:Type} : Π {n m: ℕ}, vect T n → vect T m → vect T (n + m)
+ | 0 m vect.nil ys := ys
+ | (nat.succ n) m (vect.cons x xs) ys := vect.cons x (vect.append xs ys)
+
 definition map {A B : Type} : ∀ {n}, (A -> B) -> vect A n -> vect B n
 | _ _  vect.nil := vect.nil
 | _ f (vect.cons x xs) := vect.cons (f x) (map f xs)
